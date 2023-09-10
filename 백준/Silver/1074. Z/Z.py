@@ -6,10 +6,10 @@ while n != 0:
 
     n -= 1
     if r < 2 ** n and c < 2 ** n:
-        ans += (2 ** n) * (2 ** n) * 0
+        ans += 0
 
     elif r < 2 ** n and c >= 2 ** n:
-        ans += (2 ** n) * (2 ** n) * 1
+        ans += (2 ** n) * (2 ** n)
         c -= (2 ** n)
 
     elif r >= 2 ** n and c < 2 ** n:
