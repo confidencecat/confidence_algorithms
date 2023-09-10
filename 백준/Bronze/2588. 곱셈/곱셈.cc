@@ -7,7 +7,7 @@ int main() {
     scanf("%d", &b);
     printf("%d\n", a * (b % 10));
     printf("%d\n", a * ((b / 10) % 10));
-    printf("%d\n%d", a * ((b / 100) % 10), a * b);
+    printf("%d\n%d", a * (b / 100), a * b);
 
     return 0;
 }
