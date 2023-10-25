@@ -1,10 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS 
 #include <stdio.h>
-#include <string.h>
-#include <queue>
-using namespace std;
 
-int n, m, s[10001], a, answer[10];
+int n, m, s[10001], a, answer[10], mx = -1;
 void f(int x) {
     if (x == m) {
         for (int i = 0; i < m; i++) {
@@ -13,7 +10,7 @@ void f(int x) {
         printf("\n");
     }
     else {
-        for (int i = 1; i <= 10000; i++) {
+        for (int i = 1; i <= mx; i++) {
             if (s[i] != 0) {
                 s[i]--;
                 answer[x] = i;
@@ -30,6 +27,7 @@ int main() {
     scanf("%d %d", &n, &m);
     for (int i = 0; i < n; i++) {
         scanf("%d", &a);
+        mx = a > mx ? a : mx;
         s[a]++;
     }
     f(0);
