@@ -1,40 +1,29 @@
-#define _CRT_SECURE_NO_WARNINGS 
 #include <stdio.h>
-#include <queue>
 using namespace std;
 
-int cnt = 0, n, c[16];
+int n, c = 0;
+int x[16]; 
+bool r[16], md[32], nd[32];
 
 void f(int col) {
     if (col == n) {
-        cnt++;
+        c++;
         return;
     }
-    for (int i = 0; i < n; i++) {
-        bool ch = true;
-        for (int j = 0; j < col; j++) {
-            c[col] = i;
-            if (c[j] == c[col] || ((j - col) == (c[j] - c[col]) || ((j - col) == c[col] - c[j]))) {
-                ch = false;
-                break;
-            }
-        }
-        if (ch) {
+    for (int row = 0; row < n; row++) {
+        if (!r[row] && !md[row-col+n] && !nd[row+col]) {
+            x[col] = row;
+            r[row] = md[row-col+n] = nd[row+col] = true;
             f(col + 1);
+            r[row] = md[row-col+n] = nd[row+col] = false; 
         }
     }
-
 }
 
 int main() {
     //freopen("input.txt", "rt", stdin);
     scanf("%d", &n);
-    for (int i = 0; i < n; i++) {
-        c[0] = i;
-        f(1);
-    }
-    printf("%d\n", cnt);
-
+    f(0);
+    printf("%d\n", c);
     return 0;
 }
-
