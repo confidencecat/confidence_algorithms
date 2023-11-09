@@ -10,10 +10,12 @@ int main() {
         scanf("%d %d", &s, &e);
         for (int i = s; i <= e; i++) {
             int c = i;
-            while (1) {
-                if (c % 10 == 0) n++;
-                c /= 10;
-                if (c / 10 == 0) break;
+            if (c == 0) n++;
+            else {
+                while (c >= 10) {
+                    if (c % 10 == 0) n++;
+                    c /= 10;
+                }
             }
         }
         printf("%d\n", n);
