@@ -9,8 +9,8 @@ void f(int x, int y, int n) {
         printf("%c", a[y][x]);
         return;
     }
-    bool z = true;
-    bool o = true;
+    bool z = true; // 0
+    bool o = true; // 1
 
     for (int i = y; i < y + n; i++) {
         for (int j = x; j < x + n; j++) {
@@ -21,22 +21,12 @@ void f(int x, int y, int n) {
                 o = false;
             }
 
-            if (!z && !o) {
-                break;
-            }
+            if (!z && !o) break;
         }
-        if (!z && !o) {
-            break;
-        }
+        if (!z && !o) break;
     }
 
-    if (z) {
-        printf("0");
-    }
-    else if (o) {
-        printf("1");
-    }
-    else {
+    if (!z && !o) {
         printf("(");
         f(x, y, n / 2);
         f(x + n / 2, y, n / 2);
@@ -44,12 +34,18 @@ void f(int x, int y, int n) {
         f(x + n / 2, y + n / 2, n / 2);
         printf(")");
     }
+    if (z && !o) {
+        printf("0");
+    }
+    if (!z && o) {
+        printf("1");
+    }
 }
 
 int main() {
     //freopen("input.txt", "rt", stdin);
     int n;
-    
+
     scanf("%d", &n);
 
     for (int i = 0; i < n; i++) {
