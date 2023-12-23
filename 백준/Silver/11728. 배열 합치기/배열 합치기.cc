@@ -12,7 +12,7 @@ int main() {
     for (int i = 0; i < m; i++) scanf("%d ", &b[i]);
 
     int i = 0, j = 0;
-    for (int k = 0; k < n + m; k++) {
+    while (i + j < m + n) {
         if (i == n) {
             printf("%d ", b[j++]);
         }
