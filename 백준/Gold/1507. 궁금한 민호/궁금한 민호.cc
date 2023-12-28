@@ -1,6 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS 
 #include <stdio.h>
-#define min(a, b) a < b ? a : b 
 bool c[21][21];
 int main() {
     //freopen("input.txt", "rt", stdin);
