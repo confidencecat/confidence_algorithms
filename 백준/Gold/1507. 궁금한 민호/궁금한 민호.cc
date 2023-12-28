@@ -16,14 +16,12 @@ int main() {
     for (int k = 0; k < n; k++) {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                if (!(i == j || j == k || i == k)) {
-                    if (a[i][j] - a[i][k] - a[k][j] > 0) {
-                        printf("-1");
-                        return 0;
-                    }
-                    if (a[i][j] - a[i][k] - a[k][j] == 0) {
-                        c[i][j] = true;
-                    }
+                if (a[i][j] == a[i][k] + a[k][j] && i != j && i != k && j != k) {
+                    c[i][j] = true;
+                }
+                else if (a[i][j] > a[i][k] + a[k][j]) {
+                    printf("-1");
+                    return 0;
                 }
             }
         }
@@ -31,7 +29,7 @@ int main() {
 
     for (int i = 0; i < n; i++) {
         for (int j = i; j < n; j++) {
-            if (!c[i][j]) ans += a[i][j];
+            ans += a[i][j] * !c[i][j];
         }
     }
     printf("%d\n", ans);
