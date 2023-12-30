@@ -3,15 +3,6 @@
 
 int n, a[6562][6561];
 
-void print() {
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= n; j++) {
-            printf("%c", a[i][j] == 1 ? '*' : ' ');
-        }
-        printf("\n");
-    }
-}
-
 void make(int x, int y) {
     for (int i = x - 2; i <= x; i++) {
         a[y - 2][i] = 1;
@@ -38,6 +29,11 @@ int main() {
     //freopen("input.txt", "rt", stdin);
     scanf("%d", &n);
     f(n, n, n);
-    print();
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            printf("%c", a[i][j] == 1 ? '*' : ' ');
+        }
+        printf("\n");
+    }
     return 0;
 }
