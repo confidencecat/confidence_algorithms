@@ -1,65 +1,54 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include <string.h>
 
-#define MAX_DIGITS 10000  // 최대 자릿수
+#define MAX 10000
 
-// 두 큰 수를 더하는 함수
-void addLargeNumbers(int result[], int a[], int b[]) {
+void add(int result[], int a[], int b[]) {
     int carry = 0;
-    for (int i = 0; i < MAX_DIGITS; i++) {
+    for (int i = 0; i < MAX; i++) {
         int sum = a[i] + b[i] + carry;
-        result[i] = sum % 10;  // 현재 자리수
-        carry = sum / 10;      // 자릿수 올림
+        result[i] = sum % 10;
+        carry = sum / 10;
     }
 }
 
-// 큰 수를 복사하는 함수
-void copyNumber(int dest[], int src[]) {
-    for (int i = 0; i < MAX_DIGITS; i++) {
+void copy(int dest[], int src[]) {
+    for (int i = 0; i < MAX; i++) {
         dest[i] = src[i];
     }
 }
 
-// 큰 수 출력 함수
-void printLargeNumber(int num[]) {
-    int start = MAX_DIGITS;
+void print(int num[]) {
+    int start = MAX;
     while (start > 0 && num[start - 1] == 0) {
-        start--;  // 앞쪽의 0을 건너뛰기
+        start--;
     }
     if (start == 0) {
-        printf("0");  // 모든 자리가 0인 경우
-    }
-    else {
+        printf("0\n");
+    } else {
         for (int i = start - 1; i >= 0; i--) {
             printf("%d", num[i]);
         }
+        printf("\n");
     }
-    printf("\n");
 }
 
 int main() {
     int n;
     scanf("%d", &n);
 
-    int fib1[MAX_DIGITS] = { 0 };  // 첫 번째 수
-    int fib2[MAX_DIGITS] = { 0 };  // 두 번째 수
-    int result[MAX_DIGITS] = { 0 };  // 결과 저장
+    int fib1[MAX] = {0}, fib2[MAX] = {0}, result[MAX] = {0};
 
-    fib1[0] = 1;  // 초기값 설정
-    fib2[0] = 1;  // 초기값 설정
-
+    fib1[0] = fib2[0] = 1;
     if (n == 0) printf("0\n");
     else if (n <= 2) {
-        printf("1\n");  // n이 2 이하인 경우 1 출력
-    }
-    else {
+        printf("1\n");
+    } else {
         for (int i = 3; i <= n; i++) {
-            addLargeNumbers(result, fib1, fib2);  // 두 큰 수 더하기
-            copyNumber(fib1, fib2);              // 다음 계산을 위해 복사
-            copyNumber(fib2, result);            // 다음 계산을 위해 복사
+            add(result, fib1, fib2);
+            copy(fib1, fib2);
+            copy(fib2, result);
         }
-        printLargeNumber(result);  // 결과 출력
+        print(result);
     }
 
     return 0;
