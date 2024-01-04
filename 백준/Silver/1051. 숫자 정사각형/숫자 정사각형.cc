@@ -4,27 +4,21 @@
 int main() {
     //freopen("input.txt", "rt", stdin);
     int n, m, ans = 0;
-    char a[51][51];
     scanf("%d %d", &n, &m);
-    if ((n > m ? m : n) == 1) {
-        printf("1\n");
-        return 0;
-    }
-
+    char a[51][51];
     for (int i = 0; i < n; i++) {
         scanf("%s", a[i]);
     }
-
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j++) {
-            for (int k = 0; k < (n > m ? m : n); k++) {
+    for (int k = (n > m ? m : n) - 1; k >= 0; k--) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
                 if (i + k >= n || j + k >= m) continue;
                 if (a[i][j] == a[i + k][j] && a[i][j] == a[i][j + k] && a[i][j] == a[i + k][j + k]) {
-                    ans = ans > (k + 1) * (k + 1) ? ans : (k + 1) * (k + 1);
+                    printf("%d\n", (k + 1) * (k + 1));
+                    return 0;
                 }
             }
         }
     }
-    printf("%d\n", ans);
     return 0;
 }
