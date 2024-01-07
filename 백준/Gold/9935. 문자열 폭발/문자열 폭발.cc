@@ -4,8 +4,8 @@
 #include <stdbool.h>
 
 #define MAX_LEN 1000001
-char str[MAX_LEN], bomb[MAX_LEN];
-char result[MAX_LEN];
+char str[1000001], bomb[37];
+char result[1000001];
 int str_len, bomb_len, result_len = 0;
 bool found;
 
