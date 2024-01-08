@@ -10,6 +10,10 @@
 
 수학
 
+### 제출 일자
+
+2024년 1월 8일 22:31:46
+
 ### 문제 설명
 
 <p style="text-align: center;"><img alt="" src="https://www.acmicpc.net/JudgeOnline/upload/201009/3(2).png" style="height:397px; width:363px"></p>
