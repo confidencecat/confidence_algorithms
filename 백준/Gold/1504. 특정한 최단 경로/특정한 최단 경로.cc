@@ -30,7 +30,7 @@ void dijkstra(int start, vector<pair<int, int>> graph[], int n, int dist[]) {
 }
 
 vector<pair<int, int>> graph[802];
-int dist1[802], dist2[802], dist3[802];
+int dist_1_to_n[802], dist_v1_to_n[802], dist_v2_to_n[802];
 
 int main() {
     //freopen("input.txt", "rt", stdin);
@@ -45,22 +45,24 @@ int main() {
     }
     scanf("%d %d", &v1, &v2);
 
-    dijkstra(1, graph, n, dist1);
-    dijkstra(v1, graph, n, dist2);
-    dijkstra(v2, graph, n, dist3);
+    dijkstra(1, graph, n, dist_1_to_n);
+    dijkstra(v1, graph, n, dist_v1_to_n);
+    dijkstra(v2, graph, n, dist_v2_to_n);
 
     int ans = INT_MAX;
     if (v1 != 1 && v2 != n) {
-        if (dist1[v1] != INT_MAX && dist2[v2] != INT_MAX && dist3[n] != INT_MAX)
-            ans = min(ans, dist1[v1] + dist2[v2] + dist3[n]);
-        if (dist1[v2] != INT_MAX && dist3[v1] != INT_MAX && dist2[n] != INT_MAX)
-            ans = min(ans, dist1[v2] + dist3[v1] + dist2[n]);
+        if (dist_1_to_n[v1] != INT_MAX && dist_v1_to_n[v2] != INT_MAX && dist_v2_to_n[n] != INT_MAX)
+            ans = min(ans, dist_1_to_n[v1] + dist_v1_to_n[v2] + dist_v2_to_n[n]);
+        if (dist_1_to_n[v2] != INT_MAX && dist_v2_to_n[v1] != INT_MAX && dist_v1_to_n[n] != INT_MAX)
+            ans = min(ans, dist_1_to_n[v2] + dist_v2_to_n[v1] + dist_v1_to_n[n]);
     }
     else if (v1 == 1) {
-        ans = (dist2[v2] != INT_MAX && dist3[n] != INT_MAX) ? dist2[v2] + dist3[n] : INT_MAX;
+        if (dist_v1_to_n[v2] != INT_MAX && dist_v2_to_n[n] != INT_MAX) ans = dist_v1_to_n[v2] + dist_v2_to_n[n];
+        else ans = INT_MAX;
     }
     else if (v2 == n) {
-        ans = (dist1[v1] != INT_MAX && dist2[n] != INT_MAX) ? dist1[v1] + dist2[n] : INT_MAX;
+        if (dist_1_to_n[v1] != INT_MAX && dist_v1_to_n[n] != INT_MAX) ans = dist_1_to_n[v1] + dist_v1_to_n[n];
+        else ans = INT_MAX;
     }
 
     if (ans == INT_MAX) ans = -1;
