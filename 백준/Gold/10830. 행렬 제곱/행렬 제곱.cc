@@ -1,13 +1,13 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <vector>
-#define V vector<vector<long long int>>
+#define V vector<vector<int>>
 using namespace std;
 
 int n;
 
 V multiplication(V a, V b) {
-    V ans(n, vector<long long int>(n));
+    V ans(n, vector<int>(n));
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             for (int k = 0; k < n; k++) {
@@ -20,7 +20,7 @@ V multiplication(V a, V b) {
 }
 
 V solve(V matrix, long long int t) {
-    V ans(n, vector<long long int>(n));
+    V ans(n, vector<int>(n));
     for (int i = 0; i < n; i++) ans[i][i] = 1;
 
     while (t > 0) {
@@ -43,7 +43,7 @@ int main() {
     long long int t;
     
     scanf("%d %lld", &n, &t);
-    V matrix(n, vector<long long int>(n));
+    V matrix(n, vector<int>(n));
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             int element;
@@ -58,7 +58,7 @@ int main() {
 
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
-            printf("%lld ", print[i][j]);
+            printf("%d ", print[i][j]);
         }
         printf("\n");
     }
