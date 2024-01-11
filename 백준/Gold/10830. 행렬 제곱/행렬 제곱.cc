@@ -19,25 +19,6 @@ V multiplication(V a, V b) {
     return ans;
 }
 
-V solve(V matrix, long long int t) {
-    V ans(n, vector<int>(n));
-    for (int i = 0; i < n; i++) ans[i][i] = 1;
-
-    while (t > 0) {
-        if (t % 2 == 1) {
-            t -= 1;
-            ans = multiplication(ans, matrix);
-        }
-        else {
-            t /= 2;
-            matrix = multiplication(matrix, matrix);
-        }
-
-        
-    }
-    return ans;
-}
-
 int main() {
     //freopen("input.txt", "rt", stdin);
     long long int t;
@@ -52,13 +33,24 @@ int main() {
         }
     }
 
-    
-    V print = solve(matrix, t);
+    V ans(n, vector<int>(n));
+    for (int i = 0; i < n; i++) ans[i][i] = 1;
+
+    while (t > 0) {
+        if (t % 2 == 1) {
+            t -= 1;
+            ans = multiplication(ans, matrix);
+        }
+        else {
+            t /= 2;
+            matrix = multiplication(matrix, matrix);
+        }
 
 
+    }
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
-            printf("%d ", print[i][j]);
+            printf("%d ", ans[i][j]);
         }
         printf("\n");
     }
