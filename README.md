@@ -1,2 +1,1 @@
-# confidecne_cat_boj
-This is a auto push repository for Baekjoon Online Judge created with [BaekjoonHub](https://github.com/BaekjoonHub/BaekjoonHub).
+# confidence_cat의 코드를 보러 오신 것을 환영합니다.
