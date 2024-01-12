@@ -9,8 +9,8 @@ int find(int a) {
 }
 
 void make_union(int a, int b) {
-    int a = find(a);
-    int b = find(b);
+    a = find(a);
+    b = find(b);
     if (a != b) {
         arr[b] = a;
     }
