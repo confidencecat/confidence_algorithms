@@ -12,7 +12,7 @@ int main() {
 		scanf("%d", &a[i]);
 	}
 	d[0] = 1;
-	
+	m = d[0];
 	for (int i = 1; i < n; i++) {
 		for (int j = i - 1; j >= 0; j--) {
 			if (a[i] > a[j]) {
@@ -22,11 +22,9 @@ int main() {
 		if (d[i] == 0) {
 			d[i] = 1;
 		}
-	}
-	m = d[0];
-	for (int i = 1; i < n; i++) {
 		if (d[i] > m) m = d[i];
 	}
+	
 	printf("%d\n", m);
 	return 0;
 }
