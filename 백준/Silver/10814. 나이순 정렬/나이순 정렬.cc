@@ -1,48 +1,33 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-typedef struct
-{
-	int age;
-	int idx;
-	char name[101];
-}q;
+char arr[200][10000];
 
-int compare(const void* first, const void* second){
-	q* a = (q*)first;
-	q* b = (q*)second;
+int main() {
+    //freopen("input.txt", "rt", stdin);
+    int n, age;
+    char name[101];
 
-	if (a->age < b->age)
-		return -1;
-	else if (a->age > b->age)
-		return 1;
-	else{
-		if (a->idx < b->idx)
-			return -1;
-		else
-			return 1;
-	}
-	return 0;
-}
+    for (int i = 0; i < 200; i++) {
+        arr[i][0] = '\0';
+    }
 
-int main(){
-	int i, n;
-	q* a;
+    scanf("%d", &n);
 
-	scanf("%d", &n);
-	a = (q*)malloc(n * sizeof(q));
+    for (int i = 0; i < n; i++) {
+        scanf("%d %s", &age, name);
+        char temp[200];
+        sprintf(temp, "%d %s\n", age, name);
+        strcat(arr[age - 1], temp);
+    }
 
-	for (i = 0; i < n; i++)	{
-		scanf(" %d %s", &a[i].age, a[i].name);
-		a[i].idx = i;
-	}
+    for (int i = 0; i < 200; i++) {
+        if (arr[i][0] != '\0') {
+            printf("%s", arr[i]);
+        }
+    }
 
-	qsort(a, n, sizeof(a[0]), compare);
-
-	for (i = 0; i < n; i++)	{
-		printf("%d %s\n", a[i].age, a[i].name);
-	}
-
-	return 0;
+    return 0;
 }
