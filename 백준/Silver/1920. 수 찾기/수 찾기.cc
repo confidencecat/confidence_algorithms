@@ -28,15 +28,6 @@ void init_input(INPUT* input) {
     input->__GETLINE_FLAG__ = 0;
 }
 
-void init_output(OUTPUT* output) {
-    output->write_buf = (char*)malloc(SZ * sizeof(char));
-    if (output->write_buf == NULL) {
-        fprintf(stderr, "Memory allocation failed\n");
-        exit(EXIT_FAILURE);
-    }
-    output->write_idx = 0;
-}
-
 char readChar(INPUT* input) {
     if (input->read_idx == input->next_idx) {
         input->next_idx = fread(input->read_buf, 1, SZ, stdin);
@@ -76,7 +67,54 @@ void cleanup_input(INPUT* input) {
     free(input->read_buf);
 }
 
+void init_output(OUTPUT* output) {
+    output->write_buf = (char*)malloc(SZ * sizeof(char));
+    if (output->write_buf == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
+    output->write_idx = 0;
+}
+
+void bflush(OUTPUT* output) {
+    if (output->write_idx > 0) {
+        fwrite(output->write_buf, sizeof(char), output->write_idx, stdout);
+        output->write_idx = 0;
+    }
+}
+
+void writeChar(OUTPUT* output, char c) {
+    if (output->write_idx == SZ) bflush(output);
+    output->write_buf[output->write_idx++] = c;
+}
+
+void writeInt(OUTPUT* output, int n) {
+    if (n == 0) {
+        writeChar(output, '0');
+        return;
+    }
+
+    int sign = n < 0 ? -1 : 1;
+    if (sign < 0) {
+        writeChar(output, '-');
+        n = -n;
+    }
+
+    char temp[12]; // Enough for an int
+    int temp_idx = 0;
+
+    while (n > 0) {
+        temp[temp_idx++] = '0' + (n % 10);
+        n /= 10;
+    }
+
+    for (int i = temp_idx - 1; i >= 0; --i) {
+        writeChar(output, temp[i]);
+    }
+}
+
 void cleanup_output(OUTPUT* output) {
+    bflush(output); // Make sure to flush before cleanup
     free(output->write_buf);
 }
 
@@ -115,7 +153,8 @@ int main() {
     m = readInt(&input);
     for (int i = 0; i < m; i++) {
         ma = readInt(&input);
-        printf("%d\n", f(ma));
+        writeInt(&output, f(ma));
+        writeChar(&output, '\n');
     }
 
     cleanup_input(&input);
