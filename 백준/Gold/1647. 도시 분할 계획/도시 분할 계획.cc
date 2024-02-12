@@ -1,13 +1,10 @@
 #define _CRT_SECURE_NO_WARNINGS 
 #include <stdio.h>
 #include <stdlib.h>
-
-struct INFO {
-	int s, e, v;
-};
+#include <queue>
+using namespace std;
 
 int d[1000001];
-INFO a[1000001];
 
 int find(int a) {
 	if (d[a] == a) return a;
@@ -22,33 +19,29 @@ void uni(int a, int b){
 	}
 }
 
-int com(const void* A, const void* B) {
-	INFO AA = *(INFO*)A;
-	INFO BB = *(INFO*)B;
-	return AA.v - BB.v;
-}
-
 int main() {
 	//freopen("input.txt", "rt", stdin);
 	int n, m, count = 0, j = 0, ans = 0;
+	priority_queue<pair<int, pair<int, int>>> q;
 	scanf("%d %d", &n, &m);
 	for (int i = 1; i <= m; i++) {
 		d[i] = i;
-		scanf("%d %d %d", &a[i - 1].s, &a[i - 1].e, &a[i - 1].v);
+		int ss, ee, vv;
+		scanf("%d %d %d", &ss, &ee, &vv);
+		q.push({ -vv, {ss, ee} });
 	}
 
-	qsort(a, m, sizeof(INFO), com);
+	while (!q.empty() && count < n - 2) {
+		int v = -q.top().first;
+		int s = q.top().second.first;
+		int e = q.top().second.second;
+		q.pop();
 
-
-	while (j < m) {
-		if (count == n - 2) break;
-		if (find(a[j].s) != find(a[j].e)) {
-			uni(a[j].s, a[j].e);
-			ans += a[j].v;
+		if (find(s) != find(e)) {
+			uni(s, e);
+			ans += v;
 			count++;
 		}
-		j++;
-		
 	}
 
 	printf("%d\n", ans);
