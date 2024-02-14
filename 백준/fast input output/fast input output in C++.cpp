@@ -39,22 +39,41 @@ public:
 
 class FastOutput {
 public:
-    FastOutput& operator<<(int number) { printf("%d", number); return *this; }
-    FastOutput& operator<<(long long number) { printf("%lld", number); return *this; }
-    FastOutput& operator<<(const string& str) { printf("%s", str.c_str()); return *this; }
-    FastOutput& operator<<(ostream& (*pf)(ostream&)) { pf(cout); return *this; }
-    void flush() { fflush(stdout); }
+    FastOutput& operator<<(char ch) {
+        putchar(ch); // Correctly output single characters
+        return *this;
+    }
+    FastOutput& operator<<(int number) {
+        printf("%d", number);
+        return *this;
+    }
+    FastOutput& operator<<(long long number) {
+        printf("%lld", number);
+        return *this;
+    }
+    FastOutput& operator<<(const string& str) {
+        printf("%s", str.c_str());
+        return *this;
+    }
+    FastOutput& operator<<(ostream& (*pf)(ostream&)) {
+        pf(cout); // Handle std::endl and similar
+        return *this;
+    }
+    void flush() {
+        fflush(stdout);
+    }
 };
 
-FastOutput fout;
 FastInput fin;
+FastOutput fout;
 
-#define fin cin
+#define cin fin
 #define cout fout
 
 int main() {
+    //freopen("input.txt", "rt", stdin);
     ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
+    
     int a;
     long long b;
     string s;
@@ -62,6 +81,7 @@ int main() {
     cout << a << "\n";
     cout << b << "\n";
     cout << s << "\n";
+
     return 0;
 }
 
