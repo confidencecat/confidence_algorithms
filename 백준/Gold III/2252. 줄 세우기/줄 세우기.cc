@@ -4,13 +4,12 @@
 #include <queue>
 using namespace std;
 
-int a[32002];
+int a[32002], n, m;
+vector<int> v[32002];
+queue<int> q;
 
 int main() {
-	//freopen("input.txt", "rt", stdin);
-	int n, m;
-	vector<int> v[32002];
-	queue<int> q;
+	//freopen("input.txt", "rt", stdin);	
 	scanf("%d %d", &n, &m);
 
 	for (int i = 0; i < m; i++) {
@@ -21,16 +20,16 @@ int main() {
 	}
 
 	for (int i = 1; i <= n; i++) {
-		if(a[i] == 0) q.push(i);
+		if (a[i] == 0) q.push(i);
 	}
 
 	while (!q.empty()) {
 		int x = q.front();
 		q.pop();
 		printf("%d ", x);
-		for (int i = 0; i < v[x].size(); i++) {
-			a[v[x][i]]--;
-			if (a[v[x][i]] == 0) q.push(v[x][i]);
+		for (int &next: v[x]) {
+			a[next]--;
+			if (a[next] == 0) q.push(next);
 		}
 	}
 	return 0;
