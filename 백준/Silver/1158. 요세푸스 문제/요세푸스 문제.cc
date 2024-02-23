@@ -1,29 +1,21 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include <stdio.h>
-#include<queue>
-using namespace std;
+#include<stdio.h>
 
-int main() {
-    int n, k, x = 0;
-    scanf("%d %d", &n, &k);
-    queue<int> a;
-    for (int i = 1; i <= n; i++) {
-        a.push(i);
-    }
-    printf("<");
-    for (int i = 1; i <= n; i++) {
-        for (int j = 0; j < k - 1; j++) {
-            a.push(a.front());
-            a.pop();
-        }
-        if (i == n) {
-            printf("%d>", a.front());
-        }
-        else {
-            printf("%d, ", a.front());
-        }
-        a.pop();
-    }
+int main(void) {
+	//freopen("input.txt", "rt", stdin);
+	int arr[5000], m, n, k;
 
-    return 0;
+	scanf("%d %d", &m, &n);
+	for (int i = 0; i < m; i++) {
+		arr[i] = i + 1;
+	}
+	k = n - 1;
+	printf("<%d", arr[k]);
+	for (m = m; m > 1; m--) {
+		for (int i = k--; i < m - 1; i++) arr[i] = arr[i + 1];
+		k = (k + n) % (m - 1);
+		printf(", %d", arr[k]);
+	}
+	printf(">");
+	return 0;
 }
