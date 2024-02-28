@@ -4,21 +4,18 @@
 int a, l[40001], n, ln = 0;
 
 int lower_bound(int key) {
-	int s = 0, e = ln - 1, ans = n - 1;
+	int s = 0, e = ln - 1, ans = n - 1, mid;
 
 	while (s <= e) {
-		int mid = (s + e) / 2;
+		mid = (s + e) / 2;
 
-		if (l[mid] > key) {
+		if (l[mid] >= key) {
 			e = mid - 1;
 			ans = mid;
+			if (l[mid] == key) break;
 		}
 		else if (l[mid] < key) {
 			s = mid + 1;
-		}
-		else {
-			ans = mid;
-			break;
 		}
 	}
 	return ans;
@@ -33,8 +30,7 @@ int main() {
 		if (i == 0) l[ln++] = a;
 		else if (l[ln - 1] < a) l[ln++] = a;
 		else {
-			int t = lower_bound(a);
-			l[t] = a;
+			l[lower_bound(a)] = a;
 		}
 	}
 	printf("%d\n", ln);
