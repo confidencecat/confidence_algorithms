@@ -17,35 +17,16 @@ int main() {
 	while (!q.empty()) {
 		int x = q.front();
 		q.pop();
-
 		if (x == g) break;
-
-		if (x + u <= f) {
-			if (ans[x + u] == 0) {
-				ans[x + u] = ans[x] + 1;
-				q.push(x + u);
-			}
-			/*else if(ans[x + u] < ans[x] + 1) {
-				ans[x + u] = ans[x] + 1;
-				q.push(x + u);
-			}*/
+		if (x + u <= f && ans[x + u] == 0) {
+			ans[x + u] = ans[x] + 1;
+			q.push(x + u);
 		}
-		if (x - d >= 1) {
-			if (ans[x - d] == 0) {
-				ans[x - d] = ans[x] + 1;
-				q.push(x - d);
-			}
-			/*else if (ans[x - d] < ans[x] + 1) {
-				ans[x - d] = ans[x] + 1;
-				q.push(x - d);
-			}*/
+		if (x - d >= 1 && ans[x - d] == 0) {
+			ans[x - d] = ans[x] + 1;
+			q.push(x - d);
 		}
 	}
-	/*for (int i = 1; i <= f; i++) {
-		printf("%d ", ans[i]);
-	}
-	printf("\n");*/
-
 	if (ans[g] == 0) printf("use the stairs\n");
 	else printf("%d\n", ans[g] - 1);
 	return 0;
