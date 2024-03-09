@@ -21,7 +21,7 @@
 입력받은 원소가 정답 리스트의 가장 오른쪽(증가 수열에서 가장 큰 값)보다 크다면 정답리스트의 가장 오른쪽에 이어 붙인다.
 
 
-그렇지 않다면 이분 탐색([lower bound](https://github.com/confidencecat/confidence_algorithms/blob/main/알고리즘/lower_upper_bound/lower_bound_function.cpp, "lower_bound_code_link"))을 이용하여 입력 받은 값의 원소가 정답 리스트에서 들어갈 위치를 찾는다.
+그렇지 않다면 이분 탐색([lower bound](https://github.com/confidencecat/confidence_algorithms/blob/main/백준/Gold%20IV/1647.%E2%80%85도시%E2%80%85분할%E2%80%85계획/도시%E2%80%85분할%E2%80%85계획.cc, "lower_bound_code_link"))을 이용하여 입력 받은 값의 원소가 정답 리스트에서 들어갈 위치를 찾는다.
 
 
 찾은 위치의 값을 입력받은 원소로 바꾼다.
