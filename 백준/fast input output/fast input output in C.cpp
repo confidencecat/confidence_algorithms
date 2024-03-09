@@ -63,7 +63,7 @@ char* scanfs() {
         c = scanfc();
     }
     str[i] = '\0';
-    return str; // Caller must free this memory
+    return str;
 }
 
 void cleanup_input() { free(input.read_buf); }
