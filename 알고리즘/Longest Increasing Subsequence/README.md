@@ -21,7 +21,7 @@
 입력받은 원소가 정답 리스트의 가장 오른쪽(증가 수열에서 가장 큰 값)보다 크다면 정답리스트의 가장 오른쪽에 이어 붙인다.
 
 
-그렇지 않다면 이분 탐색([lower bound][https://github.com/confidencecat/confidence_algorithms/blob/main/알고리즘/lower_upper_bound/lower_bound_function.cpp])을 이용하여 입력 받은 값의 원소가 정답 리스트에서 들어갈 위치를 찾는다.
+그렇지 않다면 이분 탐색([lower bound][https://github.com/confidencecat/confidence_algorithms/blob/main/알고리즘/lower_upper_bound/lower_bound_function.cpp, "lower_bound_code_link"])을 이용하여 입력 받은 값의 원소가 정답 리스트에서 들어갈 위치를 찾는다.
 
 
 찾은 위치의 값을 입력받은 원소로 바꾼다.
@@ -33,4 +33,4 @@
 __다만, 정달 리스트는 최장 부분 수열이 아닐 수도 있다.__
 * * *
 최장 부분 수열을 출력하기 위해서는 각 원소가 들어가야할 위치를 저장하고 뒤에서부터 확인하며 최장 부분 수열을 완성해야한다.
-이는 [14003][https://github.com/confidencecat/confidence_algorithms/blob/main/백준/Platinum/14003.%E2%80%85가장%E2%80%85긴%E2%80%85증가하는%E2%80%85부분%E2%80%85수열%E2%80%855/가장%E2%80%85긴%E2%80%85증가하는%E2%80%85부분%E2%80%85수열%E2%80%855.cc]을 참고하기 바람.
+이는 [14003][https://github.com/confidencecat/confidence_algorithms/blob/main/백준/Platinum/14003.%E2%80%85가장%E2%80%85긴%E2%80%85증가하는%E2%80%85부분%E2%80%85수열%E2%80%855/가장%E2%80%85긴%E2%80%85증가하는%E2%80%85부분%E2%80%85수열%E2%80%855.cc, "LIS_List_code_link"]을 참고하기 바람.
