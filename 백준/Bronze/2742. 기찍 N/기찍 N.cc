@@ -6,8 +6,8 @@ int main() {
     int n;
     scanf("%d", &n);
 
-    for (int i = n; i >= 1; i--) {
-        printf("%d\n", i);
+    while (n) {
+        printf("%d\n", n--);
     }
     return 0;
 }
