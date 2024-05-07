@@ -1,22 +1,24 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include<stdio.h>
-#include<vector>
-#include<algorithm>
-using namespace std;
+#include <stdio.h>
+#include <stdlib.h>
+
+int com(const void* first, const void* second) {
+    return *(int*)first - *(int*)second;
+}
 
 int main() {
-	//freopen("input.txt", "rt", stdin);
-	int n, m = 0, answer = 0;
-	scanf("%d", &n);
-	vector<int> a(n);
-	for (int i = 0; i < n; i++) {
-		scanf("%d", &a[i]);//입력
-	}
-	sort(a.begin(), a.end());//정렬
-	for (int i = 0; i < n; i++) {
-		m += a[i];//i + 1번째 사람이 기다리는 시간
-		answer += m;//총 기다리는 시간
-	}
-	printf("%d", answer);
-	return 0;
+    //freopen("input.txt", "rt", stdin);
+    int a[1001], n, s = 0, ans = 0;
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+    qsort(a, n, sizeof(int), com);
+    for (int i = 0; i < n; i++) {
+        s += a[i];
+        ans += s;
+    }
+    printf("%d\n", ans);
+    return 0;
 }
+
