@@ -1,7 +1,7 @@
 # Euclidean Algorithm(유클리드 알고리즘)
 
 ### 설명(증명)
-양수 a, b (a > b)에 대해 r = a_mod_b (0 <= r < b)가 성립 한다면 GCD(a, b) = GCD(b, r)을 성립한다.
+양수 a, b (a > b)에 대해 r = a _mod_ b (0 <= r < b)가 성립 한다면 GCD(a, b) = GCD(b, r)을 성립한다.
 
 
 r = a_mod_b가 성립한다면 
