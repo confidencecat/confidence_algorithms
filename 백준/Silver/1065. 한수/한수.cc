@@ -22,7 +22,6 @@ bool f(int n) {
 int main() {
     //freopen("input.txt", "rt", stdin);
     scanf("%d", &N);
-    //printf("%c", f(N) ? 'T' : 'F');
 
     if (N < 10) {
         printf("%d\n", N);
