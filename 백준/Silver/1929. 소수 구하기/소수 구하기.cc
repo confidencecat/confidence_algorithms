@@ -1,28 +1,23 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include <cstdio>
+#include <stdio.h>
 
-int arr[1000001]; 
+bool era[1000001];
 
+int main() {
+    //freopen("input.txt", "rt", stdin);
+    int n, m;
+    scanf("%d %d", &n, &m);
 
-int main(){
-	int m, n;
-	scanf("%d %d", &m, &n);
+    for (int i = 2; i <= m; i++) {
+        if (!era[i]) {
+            for (int j = i + i; j <= m; j += i) {
+                era[j] = 1;
+            }
+        }
+    }
 
-	arr[0] = 1;
-	arr[1] = 1;
-
-	for (int i = 2; i <= n; i++) {
-		for (int j = 2 * i; j < n + 1; j += i) {
-			if (arr[j] == 0) {
-				arr[j] = 1;
-			}
-		}
-	}
-
-	for (int i = m; i < n + 1; i++) {
-		if (arr[i] == 0)
-            printf("%d\n", i);
-	}
-
-	return 0;
+    for (int i = n; i <= m; i++) {
+        if (!era[i] && i > 1) printf("%d\n", i);
+    }
+    return 0;
 }
