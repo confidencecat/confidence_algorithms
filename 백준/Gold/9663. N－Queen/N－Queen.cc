@@ -1,29 +1,35 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-using namespace std;
+#include <stdlib.h>
 
-int n, c = 0;
-int x[16]; 
-bool r[16], md[32], nd[32];
+int a[15], n, ans = 0;
 
-void f(int col) {
-    if (col == n) {
-        c++;
+bool ch(int x) {
+    for (int i = 0; i < x; i++) {
+        if (a[x] == a[i] || x - i == abs(a[x] - a[i])) return false;
+    }
+    return true;
+}
+
+void nq(int x) {
+    if (x == n) {
+        ans++;
         return;
     }
-    for (int row = 0; row < n; row++) {
-        if (!r[row] && !md[row-col+n] && !nd[row+col]) {
-            x[col] = row;
-            r[row] = md[row-col+n] = nd[row+col] = true;
-            f(col + 1);
-            r[row] = md[row-col+n] = nd[row+col] = false; 
+
+    for (int i = 0; i < n; i++) {
+        a[x] = i;
+        if (ch(x)) {
+            nq(x + 1);
         }
     }
 }
 
 int main() {
     //freopen("input.txt", "rt", stdin);
+    
     scanf("%d", &n);
-    f(0);
-    printf("%d\n", c);
+    nq(0);
+    printf("%d\n", ans);
     return 0;
 }
