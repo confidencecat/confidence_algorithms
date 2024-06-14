@@ -1,23 +1,20 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 
-long long int a[102] = { 1, 1, 1, };
+int t, n;
+long long int a[101] = {0, 1, 1, 1, };
 
 int main() {
     //freopen("input.txt", "rt", stdin);
-    int n, m;
-    scanf("%d", &n);
-    for (int i = 0; i < n; i++) {
-        scanf("%d", &m);
-        if (a[m] != 0) {
-            printf("%lld\n", a[m - 1]);
-        }
-        else {
-            for (int j = 3; j <= m; j++) {
-                a[j] = a[j - 3] + a[j - 2];
-            }
-            printf("%lld\n", a[m - 1]);
-        }
+    
+    for (int i = 4; i <= 100; i++) {
+        a[i] = a[i - 2] + a[i - 3];
+    }
+
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d", &n);
+        printf("%lld\n", a[n]);
     }
 
     return 0;
