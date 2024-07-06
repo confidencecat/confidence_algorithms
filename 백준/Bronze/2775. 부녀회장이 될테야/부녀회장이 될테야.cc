@@ -1,25 +1,28 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 
-int t, n, k, dp[15][15];
+int a[16][16];
 
 int main() {
-	//freopen("input.txt", "rt", stdin);
+    //freopen("input.txt", "rt", stdin);
+    
+    for (int i = 1; i <= 15; i++) a[1][i] = i;
 
-	scanf("%d", &t);
-	for (int j = 0; j <= 14; j++) {
-		dp[0][j] = j;
-	}
-	while (t--) {
-		scanf("%d %d", &n, &k);
-		for (int i = 1; i <= n; i++) {
-			for (int j = 1; j <= k; j++) {
-				
-				dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+    for (int i = 2; i <= 15; i++) {
+        for (int j = 1; j <= 15; j++) {
+            a[i][j] = a[i - 1][j] + a[i][j - 1];
+        }
+    }
 
-			}
-		}
-		printf("%d\n", dp[n][k]);
-	}
-	return 0;
+    int t, aa, bb;
+     
+
+    scanf("%d", &t);
+
+    while (t--) {
+        scanf("%d %d", &aa, &bb);
+        printf("%d\n", a[aa + 1][bb]);
+    }
+
+    return 0;
 }
