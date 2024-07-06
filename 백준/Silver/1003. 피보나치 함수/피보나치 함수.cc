@@ -1,21 +1,21 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 
-int n, m;
-long long int dp[42] = {1, 0, 1};
 
 int main() {
-    scanf("%d", &n);
-    while (n--) {
-        scanf("%d", &m);
-        if (m < 2) printf("%d %d\n", dp[m], dp[m + 1]);
-        else if (dp[m + 1] != 0) printf("%d %d\n", dp[m], dp[m + 1]);
-        else {
-            for (int i = 2; i <= m + 1; i++) {
-                dp[i] = dp[i - 1] + dp[i - 2];
-            }
-            printf("%d %d\n", dp[m], dp[m + 1]);
-        }
+    //freopen("input.txt", "rt", stdin);
+    
+    long long int dp[44] = { 0, 1, 1 };
+
+    for (int i = 3; i <= 41; i++) {
+        dp[i] = dp[i - 1] + dp[i - 2];
+    }
+
+    int t, a;
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d", &a);
+        printf("%lld %lld\n", dp[(a == 0) ? (a + 1) : (a - 1)], dp[a]);
     }
     return 0;
 }
