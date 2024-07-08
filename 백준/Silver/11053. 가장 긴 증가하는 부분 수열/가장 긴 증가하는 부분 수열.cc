@@ -1,30 +1,26 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include<stdio.h>
+#include <stdio.h>
+#define min(a, b) a > b ? b : a
 
-#define max(a, b) a > b ? a : b;
-
-int n, m = 0, a[1001], d[1001];
+int a[1001], dp[1001], n, ans = 1;
 
 int main() {
-	//freopen("input.txt", "rt", stdin);
-	scanf("%d", &n);
-	for (int i = 0; i < n; i++) {
-		scanf("%d", &a[i]);
-	}
-	d[0] = 1;
-	m = d[0];
-	for (int i = 1; i < n; i++) {
-		for (int j = i - 1; j >= 0; j--) {
-			if (a[i] > a[j]) {
-				d[i] = max(d[j] + 1, d[i]);
-			}
-		}
-		if (d[i] == 0) {
-			d[i] = 1;
-		}
-		if (d[i] > m) m = d[i];
-	}
-	
-	printf("%d\n", m);
-	return 0;
+    //freopen("input.txt", "rt", stdin);
+    scanf("%d", &n);
+
+    scanf("%d", &a[0]);
+    dp[0] = 1;
+    for (int i = 1; i < n; i++) {
+        scanf("%d", &a[i]);
+        int max = 0;
+        for (int j = 0; j < i; j++) {
+            if (a[j] < a[i] && dp[j] > max) {
+                max = dp[j];
+            }
+        }
+        dp[i] = max == 0 ? 1 : (max + 1);
+        ans = ans < dp[i] ? dp[i] : ans;
+    }
+    printf("%d\n", ans);
+    return 0;
 }
