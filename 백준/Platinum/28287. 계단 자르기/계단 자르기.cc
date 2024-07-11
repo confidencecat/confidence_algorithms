@@ -1,34 +1,55 @@
 #define _CRT_SECURE_NO_WARNINGS 
-#include<stdio.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-long long int com[103], dp[103];
+typedef long long ll;
+
+ll dp[2][105][105];
 
 int main() {
-    int n;
-    long long int mod;
-    scanf("%d %lld", &n, &mod);
-    com[0] = 1;
-    for (int i = 1; i <= n + 2; i++) {
+    //freopen("input.txt", "rt", stdin);
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    ll* c = (ll*)malloc((n + 2) * sizeof(ll));
+    c[0] = c[1] = 1;
+    for (int i = 2; i <= n; i++) {
+        c[i] = 0;
         for (int j = 0; j <= i - 1; j++) {
-            com[i] = (com[i] + (com[j] * com[i - j - 1] % mod)) % mod;
+            c[i] = (c[i] + c[j] * c[i - j - 1]) % m;
         }
     }
-    dp[1] = 0;
+
     for (int i = 1; i <= n; i++) {
-        dp[i] = (2 * com[i + 1] + com[i] - com[i + 2] + mod) % mod;
+        dp[0][i][1] = c[i - 1];
+        dp[1][i][2] = (i - 1) * c[i - 1] % m;
+    }
 
-        for (int j = 1; j <= i - 1; j++) {
-            dp[i] = (dp[i] + ((2 * (i - j) + 1) * com[j] % mod * com[i - j] % mod)) % mod;
-            dp[i] %= mod;
-        }
-
+    for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= i; j++) {
-            dp[i] = (dp[i] + (((com[j - 1] * dp[i - j]) + (dp[j - 1] * com[i - j])) % mod)) % mod;
+            for (int k = 1; k + i <= n; k++) {
+                for (int l = 0; l < 2 && (l == 0 || j > 1); l++) {
+                    dp[l][i + k][j + 1] = (dp[l][i + k][j + 1] + dp[0][i][j] * c[k - (0 == l)]) % m;
+                }
+                for (int l = 1; l < 2 && (l == 0 || j > 1); l++) {
+                    dp[l][i + k][j + 1] = (dp[l][i + k][j + 1] + dp[1][i][j] * c[k - (1 == l)]) % m;
+                }
+            }
         }
+    }
 
-    }
     for (int i = 1; i <= n; i++) {
-        printf("%lld ", dp[i]);
+        for (int j = 1; j <= i; j++) {
+            for (int k = 1; k <= j + 1; k++) {
+                dp[1][i + 1][k] = (dp[1][i + 1][k] + dp[1][i][j]) % m;
+            }
+        }
     }
+
+    for (int i = 1; i <= n; i++) {
+        printf("%lld ", dp[1][i + 1][1]);
+    }
+
+    free(c);
     return 0;
 }
