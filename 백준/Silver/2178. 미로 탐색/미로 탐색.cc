@@ -1,43 +1,50 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include<queue>
-#define min(a, b) a > b ? b : a
+#include <queue>
 using namespace std;
 
-int v[101][101], ans[101][101];
+int n, m, a[101][101];
+char map[101][101];
+int dx[4] = { 0, 0, -1, 1 };
+int dy[4] = { -1, 1, 0 , 0 };
 
 int main() {
     //freopen("input.txt", "rt", stdin);
-    
-    queue<pair<int, int>> q;
-    int dx[4] = { 0, 0, -1, 1 };
-    int dy[4] = { -1, 1, 0, 0 };
-    int n, m;
-    char a[101][101];
+
     scanf("%d %d", &n, &m);
+
     for (int i = 0; i < n; i++) {
-        scanf("%s", a[i]);
+        scanf("%s", map[i]);
     }
+
+    queue<pair<int, int>> q;
+
     q.push({ 0, 0 });
-    v[0][0] = 1;
-    ans[0][0] = 1;
+    a[0][0] = 1;
+    
     while (!q.empty()) {
         int x = q.front().first;
         int y = q.front().second;
         q.pop();
 
+        //printf("%d %d\n", x, y);
+
+        if (x == m && y == n) break;
+
         for (int i = 0; i < 4; i++) {
-            int cx = x + dx[i];
-            int cy = y + dy[i];
-            if (cx < 0 || cx >= n || cy < 0 || cy >= m || v[cx][cy] == 1 || a[cx][cy] == '0')
-                continue;
-            
-            v[cx][cy] = 1;
+            int cx = dx[i] + x;
+            int cy = dy[i] + y;
+
+            //printf("%d %d\n", cx, cy);
+            if (cx < 0 || cx >= m || cy < 0 || cy >= n || map[cy][cx] == '0' || a[cy][cx] != 0) continue;
+
+            a[cy][cx] = a[y][x] + 1;
             q.push({ cx, cy });
-            if (ans[cx][cy] == 0) ans[cx][cy] = ans[x][y] + 1;
-            else ans[cx][cy] = min(ans[cx][cy], ans[x][y] + 1);
         }
+
     }
-    printf("%d\n", ans[n - 1][m - 1]);
+
+
+    printf("%d\n", a[n - 1][m - 1]);
     return 0;
 }
