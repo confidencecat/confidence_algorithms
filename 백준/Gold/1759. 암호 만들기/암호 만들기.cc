@@ -1,56 +1,62 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include <algorithm>
-#include <string.h>
-using namespace std;
+#include <stdlib.h>
 
+int n, m;
 char a[16];
-int v[16];
-int l, c;
+bool ch[16];
 
-void chk() {
-    char s[16];
-    int vo = 0, id = 0;
- 
-    for (int i = 0; i < c; i++) {
-        if (v[i]) {
-            s[id] = a[i];
-            id++;
-            if (a[i] == 'a' || a[i] == 'e' || a[i] == 'i' || a[i] == 'o' || a[i] == 'u') 
-                vo++;
-        }
-    }
-    s[l] = '\0';
-    
-    if (vo && l - vo >= 2) printf("%s\n", s);
+int com(const void* first, const void* second) {
+    return *(char*)first - *(char*)second;
 }
 
-int sl(int idx, int cn) {
-    if (cn == l) {
-        chk();
-        return 0;
+int c(int i) {
+    if (a[i] == 'a' || a[i] == 'e' || a[i] == 'i' || a[i] == 'o' || a[i] == 'u') {
+        return 1;
     }
-    if (idx == c) return 0;
- 
-    v[idx] = 1;
-    sl(idx + 1, cn + 1);
- 
-    v[idx] = 0;
-    sl(idx + 1, cn);
- 
     return 0;
 }
- 
-int main() {
-    scanf("%d %d", &l, &c);
-    for (int i = 0; i < c; i++)
-        scanf(" %c", &a[i]);
+
+void dfs(int x, int fn, int on) {
+
     
-    sort(a, a + c);
- 
-    for (int i = 0; i <= c - l; i++) {
-        memset(v, 0, sizeof(v));
-        v[i] = 1;
-        sl(i + 1, 1);
+
+    if (fn == n && on >= 1 && n - on >= 2) {
+        /*for (int i = 0; i < m; i++) {
+            printf("%d ", ch[i]);
+        }
+        printf("\n");*/
+        for (int i = 0; i < m; i++) {
+            if (ch[i]) printf("%c", a[i]);
+
+        }
+        printf("\n");
     }
+    else {
+        for (int i = x + 1; i < m; i++) {
+            ch[i] = true;
+
+            dfs(i, fn + 1, (on + c(i)));
+
+            ch[i] = false;
+        }
+    }
+}
+
+int main() {
+    //freopen("input.txt", "rt", stdin);
+
+    scanf("%d %d", &n, &m);
+
+    for (int i = 0; i < m; i++) {
+        scanf(" %c", &a[i]);
+    }
+
+    qsort(a, m, sizeof(char), com);
+
+    //printf("%s\n", a);
+
+    dfs(-1, 0, 0);
+
     return 0;
 }
