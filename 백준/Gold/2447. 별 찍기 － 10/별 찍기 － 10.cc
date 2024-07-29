@@ -1,36 +1,48 @@
-#define _CRT_SECURE_NO_WARNINGS 
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 
-int n;
-char a[6562][6561];
+bool c[6563][6563];
 
-void f(int m, int x, int y) {
-    if (m == 3) {
-        for (int i = x - 2; i <= x; i++) {
-            a[y - 2][i] = '*';
-            a[y][i] = '*';
-            if (i != x - 1) a[y - 1][i] = '*';
+void f(int x, int y, int n) {
+    if (n == 3) {
+        for (int i = 0; i < 3; i++) {
+            c[y][x - i] = true;
+            c[y - 2][x - i] = true;
+
+            c[y - i][x - 2] = true;
+            c[y - i][x] = true;
         }
     }
     else {
-        for (int i = 3; i >= 1; i--) {
-            for (int j = 3; j >= 1; j--) {
-                if (i == 2 && j == 2) continue;
-                f(m / 3, x - (m / 3 * i) + (m / 3), y - (m / 3 * j) + (m / 3));
-            }
-        }
+        f(x, y, n / 3);
+        f(x - n / 3, y, n / 3);
+        f(x - n / 3 * 2, y, n / 3);
+
+        f(x, y - n / 3, n / 3);
+        f(x - n / 3 * 2, y - n / 3, n / 3);
+
+        f(x, y - n/3*2, n / 3);
+        f(x - n / 3, y - n / 3 * 2, n / 3);
+        f(x - n / 3 * 2, y - n / 3 * 2, n / 3);
+
     }
 }
 
 int main() {
     //freopen("input.txt", "rt", stdin);
+    
+    int n;
     scanf("%d", &n);
+
     f(n, n, n);
+
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= n; j++) {
-            printf("%c", a[i][j] ? a[i][j] : ' ');
+            if (c[i][j]) printf("*");
+            else printf(" ");
         }
         printf("\n");
     }
+
     return 0;
 }
