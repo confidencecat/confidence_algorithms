@@ -1,27 +1,20 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 
-int f(int a, int b) {
-	if (b == 0){
-		return a;
-	}
-	else {
-		return f(b, a % b);
-	}
+
+int gcd(int a, int b) {
+    if (b == 0) return a;
+    return gcd(b, a % b);
 }
 
+int a, b, g;
+
 int main() {
-	//freopen("input.txt", "rt", stdin);
-	int a, b, m;
-	scanf("%d %d", &a, &b);
+    //freopen("input.txt", "rt", stdin);
 
-	for (int i = 1; i <= a * b; i++) {
-		if (i % a == 0 && i % b == 0) {
-			m = i;
-			break;
-		}
-	}
+    scanf("%d %d", &a, &b);
+    g = gcd(a, b);
+    printf("%d\n%d", g, a * b / g);
 
-	printf("%d\n%d", f(a, b), m);
-	return 0;
+    return 0;
 }
