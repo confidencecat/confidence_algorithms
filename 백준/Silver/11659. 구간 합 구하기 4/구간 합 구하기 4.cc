@@ -1,22 +1,23 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 
-int arr[100005];
+int n, m, a, s, e;
+long long int d[100001];
 
-int main(){
-    int n,m;
-    int a,b;
+int main() {
+    //freopen("input.txt", "rt", stdin);
+    
+    scanf("%d %d", &n, &m);
 
-    scanf("%d %d",&n,&m);
-
-    for(int i=1;i<=n;i++){
-        scanf("%d",&arr[i]);
-        arr[i] += arr[i-1];
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &a);
+        d[i] = d[i - 1] + a;
     }
 
-    for(int i=0;i<m;i++){
-        scanf("%d %d",&a,&b);
-
-        printf("%d\n",arr[b]-arr[a-1]);
+    while (m--) {
+        int s, e;
+        scanf("%d %d", &s, &e);
+        printf("%lld\n", d[e] - d[s - 1]);
     }
 
     return 0;
