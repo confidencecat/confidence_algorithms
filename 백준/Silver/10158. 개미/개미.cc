@@ -1,13 +1,14 @@
-#define _CRT_SECURE_NO_WARNINGS 
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 
-int main() {
-	//freopen("input.txt", "rt", stdin);
-	int n, m, sx, sy, t, rld = 1, udd = 1;
-	scanf("%d %d %d %d %d", &n, &m, &sx, &sy, &t);
-	int x = ((sx + t) / n) % 2 == 0 ? (sx + t) % n : n - ((sx + t) % n);
+int w, h, x, y, t;
 
-	int y = ((sy + t) / m) % 2 == 0 ? (sy + t) % m : m - ((sy + t) % m);
-	printf("%d %d\n", x, y);
-	return 0;
+int main() {
+    //freopen("input.txt", "rt", stdin);
+    
+    scanf("%d %d %d %d %d", &w, &h, &x, &y, &t);
+
+    printf("%d %d", (x + t) / w % 2 == 0 ? (x + t) % w : w - (x + t) % w, (y + t) / h % 2 == 0 ? (y + t) % h : h - (y + t) % h);
+
+    return 0;
 }
