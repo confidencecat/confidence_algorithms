@@ -1,51 +1,62 @@
-#define _CRT_SECURE_NO_WARNINGS 
-#include <iostream>
-#include <vector>
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
 #include <queue>
-#include <climits> // INT_MAX를 사용하기 위해
+#include <vector>
+#define INF 200000000
 using namespace std;
 
-int answer[20001];
+struct Q {
+    int e, w;
+
+    Q(int a, int b) {
+        e = a;
+        w = b;
+    }
+
+    bool operator<(const Q& q)const {
+        return w > q.w;
+    }
+};
+
+int n, m, st;
+int d[20002];
+
+priority_queue<Q> q;
+vector<pair<int, int>> v[20002];
 
 int main() {
     //freopen("input.txt", "rt", stdin);
-    int v, e, s, nu, nv, nw;
-    scanf("%d %d %d", &v, &e, &s);
-    vector<pair<int, int>> a[20001];
+    
+    scanf("%d %d %d", &n, &m, &st);
 
-    for (int i = 1; i <= v; i++) {
-        answer[i] = INT_MAX;
+    for (int i = 1; i <= n; i++) d[i] = INF;
+
+    for (int i = 0; i < m; i++) {
+        int ss, ee, vv;
+        scanf("%d %d %d", &ss, &ee, &vv);
+        v[ss].push_back({ ee, vv });
     }
 
-    for (int i = 0; i < e; i++) {
-        scanf("%d %d %d", &nu, &nv, &nw);
-        a[nu].push_back(make_pair(nv, nw));
-    }
-
-    answer[s] = 0;
-    priority_queue<pair<int, int>> q;
-    q.push(make_pair(0, s));
+    d[st] = 0;
+    q.push({ st, 0 });
 
     while (!q.empty()) {
-        int d = -q.top().first;
-        int c = q.top().second;
+        int x = q.top().e;
+        int w = q.top().w;
         q.pop();
-        if (answer[c] < d) continue;
-        for (auto& p : a[c]) {
-            int next = p.first;
-            int nextd = d + p.second;
 
-            if (nextd < answer[next]) {
-                answer[next] = nextd;
-                q.push(make_pair(-nextd, next));
+        for (auto cx : v[x]) {
+            if (w + cx.second < d[cx.first]) {
+                d[cx.first] = w + cx.second;
+                q.push({ cx.first, w + cx.second });
             }
         }
     }
 
-    for (int i = 1; i <= v; i++) {
-        if (answer[i] == INT_MAX) printf("INF\n");
-        else printf("%d\n", answer[i]);
+    for (int i = 1; i <= n; i++) {
+        if (d[i] == INF) printf("INF\n");
+        else printf("%d\n", d[i]);
     }
+
     return 0;
 }
-
