@@ -19,7 +19,8 @@ void f(int fn) {
         }
         if (num > mx) mx = num;
         if (num < mi) mi = num;
-    } else {
+    }
+    else {
         for (int i = 0; i < 4; i++) {
             if (cn[i] > 0) {
                 c[fn] = i + 1;
