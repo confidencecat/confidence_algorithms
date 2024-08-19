@@ -1,34 +1,32 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 
-int n, m;
-int ch[10];
+int n, m, a[10];
 bool c[10];
 
 void f(int fn) {
     if (fn == m) {
         for (int i = 0; i < m; i++) {
-            printf("%d ", ch[i]);
+            printf("%d ", a[i]);
         }
         printf("\n");
     }
-    else if(fn < n) {
+    else if(fn < m){
         for (int i = 1; i <= n; i++) {
-            if (c[i]) continue;
-            ch[fn] = i;
-            c[i] = true;
-            f(fn + 1);
-            c[i] = false;
+            if (c[i] == false) {
+                c[i] = true;
+                a[fn] = i;
+                f(fn + 1);
+                a[fn] = 0;
+                c[i] = false;
+            }
         }
     }
 }
 
 int main() {
     //freopen("input.txt", "rt", stdin);
-
     scanf("%d %d", &n, &m);
-
     f(0);
-
     return 0;
 }
