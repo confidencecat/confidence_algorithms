@@ -1,6 +1,11 @@
-a, b = map(int, input().split())
+h, m = map(int, input().split())
 
-if b >= 45:
-    print(a, b - 45)
-else:
-    print(23 if a == 0 else (a - 1), 60 + (b - 45))
+if m < 45 :
+    if h == 0 :
+        h = 23
+        m += 60
+    else :
+        h -= 1	
+        m += 60
+        
+print(h, m-45)
