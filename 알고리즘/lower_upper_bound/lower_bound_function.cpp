@@ -7,7 +7,8 @@ int lower_bound(int list[], int len, int key) {
         if (list[mid] >= key) {
             end = mid - 1;
             ans_index = mid;
-        } else {
+        }
+        else {
             start = mid + 1;
         }
     }
