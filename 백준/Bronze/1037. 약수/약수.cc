@@ -1,25 +1,17 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include <stdlib.h>
 
-int com(const void* A, const void *B){
-  return *(int*)A - *(int*)B;
-}
+int n, a, mx = -1, mi = 1000001;
+
 
 int main() {
-  int n, a[51];
-  scanf("%d", &n);
-
-  for (int i = 0; i < n; i++){
-    scanf("%d", &a[i]);
-  }
-
-
-  qsort(a, n, sizeof(int), com);
-
-
-
-  if(n % 2 == 0) printf("%d\n", a[n/2] * a[n / 2 - 1]);
-  else printf("%d\n", a[n/2] * a[n/2]);
-  
-  return 0;
+    //freopen("input.txt", "rt", stdin);
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a);
+        mx = mx < a ? a : mx;
+        mi = mi > a ? a : mi;
+    }
+    printf("%d\n", mx * mi);
+    return 0;
 }
