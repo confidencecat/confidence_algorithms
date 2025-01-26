@@ -1,21 +1,8 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-
-long long int n;
-
+long long int n, i = 1;
 int main() {
-    //freopen("input.txt", "r", stdin);
-
     scanf("%lld", &n);
-
-    for (long long int i = 1, s = 0; i <= 2147483648; i++) {
-        if (s + i > n) {
-            printf("%lld\n", i - 1);
-            break;
-        }
-        s += i;
-        //printf("%lld : %lld\n", i, s);
-    }
-
+    for (long long int s = 0; i <= 2147483648LL && (s += i) <= n; i++);
+    printf("%lld\n", i - 1);
     return 0;
 }
