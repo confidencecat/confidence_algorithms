@@ -1,14 +1,14 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 
-int n, a[100001], l[100001], v = 0, d = 0, ans = 0;
+long long n, a[100001], l[100001], v = 0, d = 0, ans = 0;
 
 int main() {
     //freopen("input.txt", "rt", stdin);
 
-    scanf("%d", &n);
-    for (int i = 1; i < n; i++) scanf("%d", &a[i]);
-    for (int i = 0; i < n; i++) scanf("%d", &l[i]);
+    scanf("%lld", &n);
+    for (int i = 1; i < n; i++) scanf("%lld", &a[i]);
+    for (int i = 0; i < n; i++) scanf("%lld", &l[i]);
     d = a[1];
     v = l[0];
     for (int i = 1; i < n - 1; i++) {
@@ -20,7 +20,7 @@ int main() {
         else d += a[i + 1];
     }
     ans += d * v;
-    printf("%d\n", ans);
+    printf("%lld\n", ans);
 
     return 0;
 }
