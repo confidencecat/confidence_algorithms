@@ -1,124 +1,139 @@
-#define _CRT_SECURE_NO_WARNINGS 
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#define SZ (1 << 20)
+#define IBUF_SIZE (1 << 20)
+#define OBUF_SIZE (1 << 20)
 
-typedef struct {
-    char* read_buf;
-    int read_idx, next_idx;
-} INPUT;
+static char inbuf[IBUF_SIZE];
+static int in_pos, in_len;
 
-typedef struct {
-    char* write_buf;
-    int write_idx;
-} OUTPUT;
-
-INPUT input;
-OUTPUT output;
+static char outbuf[OBUF_SIZE];
+static int out_pos;
 
 void init_input() {
-    input.read_buf = (char*)malloc(SZ);
-    input.read_idx = input.next_idx = 0;
+    in_pos = 0;
+    in_len = 0;
 }
 
 char scanfc() {
-    if (input.read_idx == input.next_idx) {
-        input.next_idx = fread(input.read_buf, 1, SZ, stdin);
-        if (!input.next_idx) return 0;
-        input.read_idx = 0;
+    if (in_pos == in_len) {
+        in_len = (int)fread(inbuf, 1, IBUF_SIZE, stdin);
+        if (in_len == 0) return 0;
+        in_pos = 0;
     }
-    return input.read_buf[input.read_idx++];
+    return inbuf[in_pos++];
 }
 
-int is_blank(char c) { return c == ' ' || c == '\n' || c == '\r' || c == '\t'; }
+int is_blank(char c) {
+    return c == ' ' || c == '\n' || c == '\r' || c == '\t';
+}
 
 int scanfi() {
-    int result = 0, sign = 1;
-    char c = scanfc();
+    int c = scanfc();
     while (is_blank(c)) c = scanfc();
+    int sign = 1;
     if (c == '-') { sign = -1; c = scanfc(); }
-    while (c >= '0' && c <= '9') { result = result * 10 + (c - '0'); c = scanfc(); }
-    return result * sign;
+    int res = 0;
+    while (c >= '0' && c <= '9') {
+        res = res * 10 + (c - '0');
+        c = scanfc();
+    }
+    return res * sign;
 }
 
 long long scanfl() {
-    long long result = 0;
-    int sign = 1;
-    char c = scanfc();
+    int c = scanfc();
     while (is_blank(c)) c = scanfc();
+    int sign = 1;
     if (c == '-') { sign = -1; c = scanfc(); }
-    while (c >= '0' && c <= '9') { result = result * 10 + (c - '0'); c = scanfc(); }
-    return result * sign;
+    long long res = 0;
+    while (c >= '0' && c <= '9') {
+        res = res * 10 + (c - '0');
+        c = scanfc();
+    }
+    return res * sign;
 }
 
 char* scanfs() {
-    char* str = (char*)malloc(SZ);
-    int i = 0;
+    int cap = 128, len = 0;
+    char* s = (char*)malloc(cap);
     char c = scanfc();
     while (is_blank(c)) c = scanfc();
-    while (!is_blank(c) && c) {
-        str[i++] = c;
+    while (c != 0 && !is_blank(c)) {
+        if (len + 1 >= cap) {
+            cap *= 2;
+            s = (char*)realloc(s, cap);
+        }
+        s[len++] = c;
         c = scanfc();
     }
-    str[i] = '\0';
-    return str;
+    s[len] = '\0';
+    return s;
 }
 
-void cleanup_input() { free(input.read_buf); }
+void cleanup_input() {
+}
 
 void init_output() {
-    output.write_buf = (char*)malloc(SZ);
-    output.write_idx = 0;
+    out_pos = 0;
 }
 
 void bflush() {
-    if (output.write_idx) {
-        fwrite(output.write_buf, 1, output.write_idx, stdout);
-        output.write_idx = 0;
+    if (out_pos) {
+        fwrite(outbuf, 1, out_pos, stdout);
+        out_pos = 0;
     }
 }
 
 void printfc(char c) {
-    if (output.write_idx == SZ) bflush();
-    output.write_buf[output.write_idx++] = c;
+    if (out_pos == OBUF_SIZE) bflush();
+    outbuf[out_pos++] = c;
 }
 
 void printfi(int n) {
-    if (!n) { printfc('0'); return; }
+    if (n == 0) { printfc('0'); return; }
     if (n < 0) { printfc('-'); n = -n; }
-    char temp[12];
-    int i = 0;
-    while (n) { temp[i++] = n % 10 + '0'; n /= 10; }
-    while (i--) printfc(temp[i]);
+    char tmp[12];
+    int idx = 0;
+    while (n) {
+        tmp[idx++] = (n % 10) + '0';
+        n /= 10;
+    }
+    while (idx--) {
+        printfc(tmp[idx]);
+    }
 }
 
 void printfl(long long n) {
-    if (!n) { printfc('0'); return; }
+    if (n == 0) { printfc('0'); return; }
     if (n < 0) { printfc('-'); n = -n; }
-    char temp[20];
-    int i = 0;
-    while (n) { temp[i++] = n % 10 + '0'; n /= 10; }
-    while (i--) printfc(temp[i]);
+    char tmp[21];
+    int idx = 0;
+    while (n) {
+        tmp[idx++] = (n % 10) + '0';
+        n /= 10;
+    }
+    while (idx--) {
+        printfc(tmp[idx]);
+    }
 }
 
-void printfs(const char* str) {
-    while (*str) {
-        printfc(*str++);
+void printfs(const char* s) {
+    while (*s) {
+        printfc(*s++);
     }
 }
 
 void cleanup_output() {
     bflush();
-    free(output.write_buf);
 }
 
 int main() {
     freopen("input.txt", "rt", stdin);
     init_input();
     init_output();
-    //예시
     int n = scanfi();
     long long lln = scanfl();
     char c = scanfc();
@@ -127,8 +142,6 @@ int main() {
     printfl(lln); printfc('\n');
     printfc(c); printfc('\n');
     printfs(s); printfc('\n'); free(s);
-    //예시
-
     cleanup_input();
     cleanup_output();
     return 0;
