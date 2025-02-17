@@ -41,7 +41,10 @@ int main() {
 			}
 			else {
 				if (b[i] == 1) {
-					
+					b[i]--;
+					printf("%d\n", d);
+
+					if (!(--k)) tf = false;
 				}
 				else if (b[i] >= 2) {
 					b[i]--;
