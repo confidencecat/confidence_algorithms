@@ -5,17 +5,6 @@ int r, c, ans = 0;
 char map[10001][501];
 int d[3] = { -1, 0, 1 };
 
-void print() {
-    for (int i = 0; i < r; i++) {
-        for (int j = 0; j < c; j++) {
-            printf("%c", map[i][j]);
-        }
-        printf("\n");
-    }
-
-    printf("\n");
-}
-
 int f(int x, int y) {
     if (x == c - 1) {
         return 1;
