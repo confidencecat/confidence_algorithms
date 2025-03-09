@@ -1,12 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include <stdlib.h>
 #include <queue>
 using namespace std;
-
-int com(const void* A, const void* B) {
-    return *(int*)A - *(int*)B;
-}
 
 typedef struct Q {
     long long int v;
@@ -20,16 +15,47 @@ typedef struct Q {
 
 }QQ;
 
+char rbuf[1 << 20];
+int idx, nidx;
+inline char read() {
+    if (idx == nidx) {
+        nidx = fread(rbuf, 1, 1 << 20, stdin);
+        if (!nidx) return 0;
+        idx = 0;
+    }
+    return rbuf[idx++];
+}
+inline long long rll() {
+    long long sum = 0;
+    char now = read();
+    while (now <= 32) now = read();
+    while (now >= 48) {
+        sum = sum * 10LL + (now - '0');
+        now = read();
+    }
+    return sum;
+}
+
+inline int ri() {
+    int sum = 0;
+    char now = read();
+
+    while (now <= 32) now = read();
+    while (now >= 48) sum = sum * 10 + now - '0', now = read();
+
+    return sum;
+}
+
 int t, n;
 long long int a, ans = 0;
 priority_queue<QQ> q;
 
 int main() {
-    for (scanf("%d", &t); t; t--) {
+    for (t = ri(); t; t--) {
         ans = 0;
-        scanf("%d", &n);
+        n = ri();
         for (int i = 0; i < n; i++) {
-            scanf("%lld", &a);
+            a = rll();
             q.push(a);
         }
 
@@ -37,7 +63,6 @@ int main() {
             long long int x = q.top().v; q.pop();
             long long int y = q.top().v; q.pop();
             ans += x + y;
-            //printf("%d %d -> ans:%d\n", x, y, ans);
             q.push(x + y);
         }
         q.pop();
