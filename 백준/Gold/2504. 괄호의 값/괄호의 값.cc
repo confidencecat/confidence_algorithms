@@ -7,7 +7,7 @@ using namespace std;
 int n;
 char s[34];
 
-static int evaluate(char pr, int& idx) {
+static int f(char pr, int& idx) {
     int sum = 0;
 
     while (idx <= n + 1) {
@@ -16,20 +16,19 @@ static int evaluate(char pr, int& idx) {
             return sum == 0 ? 1 : sum;
         }
         if (s[idx] == '(') {
-            sum += evaluate(')', idx) * 2;
+            sum += f(')', idx) * 2;
         }
         else if (s[idx] == '[') {
-            sum += evaluate(']', idx) * 3;
+            sum += f(']', idx) * 3;
         }
         else {
-            return 0; // 잘못된 괄호일 경우 0 반환
+            return 0;
         }
     }
     return 0;
 }
 
 int main() {
-
     scanf("%s", s);
     n = strlen(s);
 
@@ -56,12 +55,11 @@ int main() {
         return 0;
     }
 
-    // 문자열 앞뒤에 구분자 추가
     for (int i = n; i >= 1; i--) s[i] = s[i - 1];
     s[0] = '{'; s[n + 1] = '}'; s[n + 2] = '\0';
 
     int idx = 0;
-    int result = evaluate('}', idx);
+    int result = f('}', idx);
     printf("%d", result);
 
     return 0;
