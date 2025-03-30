@@ -1,45 +1,35 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include <vector>
 #include <queue>
-#include <algorithm>
+#include <stdlib.h>
 using namespace std;
-#define ll long long
 
-struct Problem {
-    ll deadline;
-    ll ramen;
-};
+int n, sum = 0;
+int a[200001][2];
+
+int com(const void* A, const void* B) {
+    int* AA = (int*)A;
+    int* BB = (int*)B;
+    return AA[0] - BB[0];
+}
+
+priority_queue<int> q;
 
 int main() {
-    int n;
     scanf("%d", &n);
-    vector<Problem> problems(n);
-
     for (int i = 0; i < n; i++) {
-        scanf("%lld %lld", &problems[i].deadline, &problems[i].ramen);
+        scanf("%d %d", &a[i][0], &a[i][1]);
     }
-
-    sort(problems.begin(), problems.end(), [](const Problem& a, const Problem& b) {
-        return a.deadline < b.deadline;
-        });
-
-
-    priority_queue<ll, vector<ll>, greater<ll>> pq;
-
+    qsort(a, n, sizeof(a[0]), com);
     for (int i = 0; i < n; i++) {
-        pq.push(problems[i].ramen);
-        if (pq.size() > problems[i].deadline) {
-            pq.pop();
-        }
+        q.push(-a[i][1]);
+        if (q.size() > a[i][0]) q.pop();
+    }
+    while (!q.empty()) {
+        sum -= q.top();
+        q.pop();
     }
 
-    ll ans = 0;
-    while (!pq.empty()) {
-        ans += pq.top();
-        pq.pop();
-    }
-
-    printf("%lld\n", ans);
+    printf("%d\n", sum);
     return 0;
 }
