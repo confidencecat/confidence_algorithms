@@ -22,17 +22,9 @@ int main() {
         sum -= q.front();
         q.pop();
 
-        if (sum + a[i] <= l) {
-            q.push(a[i]);
-            sum += a[i++];
-        }
-        else {
-            q.push(0);
-        }
+        q.push((sum + a[i] <= l ? a[i] : 0));
+        sum += (sum + a[i] <= l ? a[i++] : 0);
     }
     printf("%d\n", ans + w);
-
-
-
     return 0;
 }
