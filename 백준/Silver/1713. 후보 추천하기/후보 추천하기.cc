@@ -24,37 +24,19 @@ int com_a(const void* A, const void* B) {
 }
 
 int main() {
-    scanf("%d", &m);
-    scanf("%d", &n);
-    for (int i = 0; i < n; i++) scanf("%d", &a[i]);
-
+    scanf("%d %d", &m, &n);
     for (int i = 0; i < n; i++) {
-        if (dn == m) {
-            if (c[a[i]] == 0) {
+        scanf("%d", &a[i]);
+        if (c[a[i]] == 0) {
+            if (dn == m) {
                 c[d[0].n] = 0;
                 d[0] = Q{ a[i], i, &c[a[i]] };
-                c[a[i]] = 1;
             }
-            else {
-                c[a[i]]++;
-            }
+            else d[dn++] = Q{ a[i], i, &c[a[i]] };
+            c[a[i]] = 1;
         }
-        else {
-            if (c[a[i]] == 0) {
-                d[dn++] = Q{ a[i], i, &c[a[i]] };
-                c[a[i]] = 1;
-            }
-            else {
-                c[a[i]]++;
-            }
-        }
+        else c[a[i]]++;
         qsort(d, dn, sizeof(d[0]), com);
-
-        /*for (int i = 0; i < dn; i++) {
-            printf("%d %d %d\n", d[i].n, d[i].i, *d[i].c);
-        }
-        printf("\n");*/
-
     }
     qsort(d, dn, sizeof(d[0]), com_a);
     for (int i = 0; i < dn; i++) {
