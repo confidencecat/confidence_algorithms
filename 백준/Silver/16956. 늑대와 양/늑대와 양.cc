@@ -1,50 +1,39 @@
-#define _CRT_SECURE_NO_WARNINGS 
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include <string.h>
 
-int n, m;
-char map[502][502];
+int r, c;
+char map[501][501];
 int dx[4] = { 0, 0, -1, 1 };
 int dy[4] = { -1, 1, 0, 0 };
 
-bool ch(int y, int x) {
-    for (int i = 0; i < 4; i++) {
-        int cx = x + dx[i];
-        int cy = y + dy[i];
-
-        if (cx < 0 || cx >= m || cy < 0 || cy >= n) continue;
-        //printf("%d %d\n", cx, cy);
-        if (map[cy][cx] == 'S') continue;
-        if (map[cy][cx] == 'W') return false;
-        map[cy][cx] = 'D';
-    }
-    return true;
-}
-
 int main() {
-    //freopen("input.txt", "rt", stdin);
-    
-    scanf("%d %d", &n, &m);
+    scanf("%d %d", &r, &c);
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < r; i++) {
         scanf("%s", map[i]);
     }
-
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j++) {
-            //printf("%c\n", map[i][j]);
-            if (map[i][j] == 'S') {
-                //printf("1\n");
-                if (ch(i, j) == false) {
-                    printf("0\n");
+    for (int i = 0; i < r; i++) {
+        for (int j = 0; j < c; j++) {
+            if (map[i][j] != 'W') continue;
+            for (int k = 0; k < 4; k++) {
+                int cx = j + dx[k];
+                int cy = i + dy[k];
+                if (cx < 0 || cx >= c || cy < 0 || cy >= r) continue;
+                if (map[cy][cx] == 'S') {
+                    printf("0");
                     return 0;
+                }
+                else if(map[cy][cx] == '.') {
+                    map[cy][cx] = 'D';
                 }
             }
         }
     }
     printf("1\n");
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < r; i++) {
         printf("%s\n", map[i]);
     }
+
+
     return 0;
 }
