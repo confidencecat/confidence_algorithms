@@ -43,36 +43,17 @@ bool bfs(int fx, int fy) {
             }
         }
     }
-    //printf(">>%d, %d\n", sum, c);
     while (!m.empty()) {
         int x = m.front().first;
         int y = m.front().second;
         m.pop();
-        //printf("-%d %d %d\n", y, x, map[y][x]);
         map[y][x] = (sum / c);
     }
 
     return tf;
 }
 
-void print() {
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            printf("%d ", map[i][j]);
-        }
-        printf("\n");
-    }
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            printf("%d ", ch[i][j] ? 1 : 0);
-        }
-        printf("\n");
-    }
-    printf("\n");
-}
-
 int main() {
-    //freopen("input.txt", "rt", stdin);
 
     scanf("%d %d %d", &n, &l, &r);
     for (int i = 0; i < n; i++) {
@@ -93,14 +74,11 @@ int main() {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (!ch[i][j]) {
-                    //printf("===%d %d===\n", j, i);
                     ch[i][j] = true;
                     if (bfs(j, i)) tf = false;
-                    //print();
                 }
             }
         }
-        //printf("=================\n");
         if (tf) break;
         ans++;
     }
