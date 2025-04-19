@@ -1,31 +1,22 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
+#define mx(a, b) ((a) > (b) ? (a) : (b))
 
-#define max(a, b) a > b ? a : b
-#define min(a, b) a < b ? a : b
-
+int t, l, n, x;
+long long int min, max;
 
 int main() {
-    //freopen("input.txt", "rt", stdin);
-    int t;
-    scanf("%d", &t);
-
-    while (t--) {
-        int l, n;
+    for (scanf("%d", &t); t--;) {
         scanf("%d %d", &l, &n);
-
-        int a, it = 0, xt = 0;
-
+        min = 0;
+        max = 0;
         for (int i = 0; i < n; i++) {
-            scanf("%d", &a);
-            int mi = min(a, l - a);
-            int mx = max(a, l - a);
-
-            it = max(it, mi);
-            xt = max(xt, mx);
+            scanf("%d", &x);
+            min = mx(min, (x < l - x ? x : l - x));
+            max = mx(max, (x < l - x ? l - x : x));
         }
-        printf("%d %d\n", it, xt);
+        printf("%lld %lld\n", min, max);
     }
-
+    
     return 0;
 }
