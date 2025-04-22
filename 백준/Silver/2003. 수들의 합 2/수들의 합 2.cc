@@ -1,29 +1,30 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#define ll long long int
 
-int n, a[10001], cnt = 0;
-ll m, s[10001];
-
+int n, ans = 0, a[10001];
+long long m, sum[10001];
 
 int main() {
-    //freopen("input.txt", "rt", stdin);
-    
-    scanf("%lld %lld", &n, &m);
+    scanf("%d %lld", &n, &m);
 
     for (int i = 1; i <= n; i++) {
         scanf("%d", &a[i]);
-        s[i] = s[i - 1] + a[i];
+        sum[i] = sum[i - 1] + a[i];
     }
 
-
-    for (int i = 1; i <= n; i++) {
-        for (int j = i; j <= n; j++) {
-            if (s[j] - s[i - 1] == m) cnt++;
+    int s = 1, e = 1;
+    while (s <= n && e <= n) {
+        long long su = sum[e] - sum[s - 1];
+        if (su >= m) {
+            if (su == m)
+                ans++;
+            s++;
+        }
+        else {
+            e++;
         }
     }
 
-    printf("%d\n", cnt);
-
+    printf("%d\n", ans);
     return 0;
 }
