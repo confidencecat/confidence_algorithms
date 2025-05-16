@@ -13,6 +13,8 @@ int main() {
     int h = (int)pow(2, n) - 1;
     bool d = n%2==1;
     int sh = d ? 0 : h - 1;
+
+
     for (int i = 0; i < h; i++) {
         for (int j = 0; j < w; j++) s[i][j] = ' ';
     }
@@ -22,33 +24,21 @@ int main() {
     for (int m = n; m > 0; m--) {
         ww = (int)pow(2, (m + 1)) - 3;
         hh = (int)pow(2, m) - 1;
-        //printf("%d %d %d %d\n", ww, hh, sh, d);
-        if (d) {
-            for (int i = 0; i <= ww / 2; i++) {
-                s[i+sh][w / 2 + i] = '*';
-                s[i+sh][w / 2 - i] = '*';
-                s[sh+hh - 1][w / 2 + i] = '*';
-                s[sh+hh - 1][w / 2 - i] = '*';
-            }
-            sh = sh + hh - 2;
+        sh = (!d ? sh - hh + 1 : sh);
+        for (int i = 0; i <= ww / 2; i++) {
+            s[i + sh][w / 2 + i + (d ? 0 : -ww / 2)] = '*';
+            s[i + sh][w / 2 - i + (d ? 0 : ww / 2)] = '*';
+            s[sh + (d ? hh - 1 : 0)][w / 2 + i + (d ? 0 : -ww / 2)] = '*';
+            s[sh + (d ? hh - 1 : 0)][w / 2 - i + (d ? 0 : ww / 2)] = '*';
         }
-        else {
-            sh = sh - hh + 1;
-            for (int i = 0; i <= ww / 2; i++) {
-                s[sh + i][w / 2 + ww / 2 - i] = '*';
-                s[sh + i][w / 2 - ww / 2 + i] = '*';
-                s[sh+0][w / 2 + ww / 2 - i] = '*';
-                s[sh+0][w / 2 - ww / 2 + i] = '*';
-            }
-            sh = sh + 1;
-        }
+        sh = (d ? (sh + hh - 2) : sh + 1);
         d = !d;
-        
     }
     for (int i = 0; i < h; i++) {
         for (int j = 0; j < (n%2==1 ? w/2+i + 1 : w - i); j++) printf("%c", s[i][j]);
         printf("\n");
     }
+    
     
     return 0;
 }
