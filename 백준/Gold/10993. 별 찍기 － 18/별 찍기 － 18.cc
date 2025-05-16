@@ -51,10 +51,8 @@ int main() {
         d = !d;
     }
     for (int i = 0; i < h; i++) {
-        
         for (int j = 0; j < (n%2==1 ? w/2+i + 1 : w - i); j++){
-            char cc = s[i][j] == NULL ? ' ' : s[i][j];
-            printfc(cc);
+            printfc((s[i][j] == NULL ? ' ' : s[i][j]));
         } 
         printfc('\n');
     }
