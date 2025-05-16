@@ -2,13 +2,34 @@
 #include <stdio.h>
 #include <math.h>
 
+#include <stdlib.h>
+#include <string.h>
+#define OBUF_SIZE (1 << 20)
+
+static char outbuf[OBUF_SIZE];
+static int out_pos;
+
+
+void bflush() {
+	if (out_pos) {
+		fwrite(outbuf, 1, out_pos, stdout);
+		out_pos = 0;
+	}
+}
+
+void printfc(char c) {
+	if (out_pos == OBUF_SIZE) bflush();
+	outbuf[out_pos++] = c;
+}
+
+
 int n;
 char s[1026][2048];
 
 int ww, hh, i, w, h;
 
 int main() {
-
+    out_pos = 0;
     scanf("%d", &n);
     for (i = 0, w = 1; i < (n + 1); i++, w *= 2); w -= 3;
     for (i = 0, h = 1; i < (n); i++, h *= 2); h--;
@@ -30,10 +51,14 @@ int main() {
         d = !d;
     }
     for (int i = 0; i < h; i++) {
-        for (int j = 0; j < (n%2==1 ? w/2+i + 1 : w - i); j++) printf("%c", s[i][j]==NULL ? ' ' : s[i][j]);
-        printf("\n");
+        
+        for (int j = 0; j < (n%2==1 ? w/2+i + 1 : w - i); j++){
+            char cc = s[i][j] == NULL ? ' ' : s[i][j];
+            printfc(cc);
+        } 
+        printfc('\n');
     }
-    
+    bflush();
     
     return 0;
 }
