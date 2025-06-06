@@ -1,76 +1,35 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include <cstdio>
-#include <string>
-#include <vector>
-#include <algorithm>
-using namespace std;
+#include <stdio.h>
 
-static const int cost[10] = { 6, 2, 5, 5, 4, 5, 6, 3, 7, 6 };
 
-bool is_smaller(const string &a, const string &b) {
-    if (a.size() != b.size())
-        return a.size() < b.size();
-    return a < b;
-}
+//{ 2, 5, 5, 4, 5, 6, 3, 7, 6, 6 }
+//  1  2  3  4  5  6  7  8  9  10
+
+int t, c;
+int dp[101] = { 0, 0, 1, 7, 4, 2, 6, 8, 10, 18, 22, 20, 28, 68, 88 };
+int p[7] = { 888, 108, 188, 200, 208, 288, 688 };
 
 int main() {
-    const int MAXN = 100;
-    vector<string> dp_min(MAXN + 1, "");
-
-    for (int i = 2; i <= MAXN; i++) {
-        string best = "";
-        for (int d = 0; d <= 9; d++) {
-            int cst = cost[d];
-            if (cst > i) continue;
-
-            if (cst == i) {
-                if (d == 0) continue;
-                string cand(1, char('0' + d));
-                if (best.empty() || is_smaller(cand, best))
-                    best = cand;
-            }
-            else {
-                int rem = i - cst;
-                if (dp_min[rem].empty()) continue;
-                const string &base = dp_min[rem];
-
-                {
-                    string candA = base + char('0' + d);
-                    if (best.empty() || is_smaller(candA, best))
-                        best = candA;
-                }
-
-                if (d != 0) {
-                    string candB = string(1, char('0' + d)) + base;
-                    if (best.empty() || is_smaller(candB, best))
-                        best = candB;
-                }
+    scanf("%d", &t);
+    while (t--) {
+        scanf("%d", &c);
+        if (c <= 14) printf("%d", dp[c]);
+        else {
+            printf("%d", p[c % 7]);
+            for (int i = 1; i < (c - 1) / 7 - 1; i++) {
+                printf("8");
             }
         }
-        dp_min[i] = best;
-    }
 
-    int T;
-    scanf("%d", &T);
-    while (T--) {
-        int n;
-        scanf("%d", &n);
+        printf(" ");
 
-        const string &min_num = dp_min[n];
-
-        string max_num;
-        if (n % 2 == 1) {
-            max_num.push_back('7');
-            int cnt1 = (n - 3) / 2;
-            for (int i = 0; i < cnt1; i++)
-                max_num.push_back('1');
-        } else {
-            int cnt1 = n / 2;
-            for (int i = 0; i < cnt1; i++)
-                max_num.push_back('1');
+        if (c % 2 == 1) {
+            printf("7");
+            for (int i = 0; i < (c / 2) - 1; i++) printf("1");
         }
-
-        printf("%s %s\n", min_num.c_str(), max_num.c_str());
+        else for (int i = 0; i < c / 2; i++) printf("1");
+        printf("\n");
     }
+
     return 0;
 }
