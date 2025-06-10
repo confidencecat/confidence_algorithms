@@ -1,20 +1,18 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #define max(a, b) ((a) > (b) ? (a) : (b))
-#define min(a, b) ((a) < (b) ? (a) : (b))
 
-int n, a[100001], mxc = 0, mic = 0, mx = 0, mi = 0;
-bool mxt = true, mit = true;
+int n, l, c, mxc = 0, mic = 0, mx = 0, mi = 0;
 
 int main() {
     
     scanf("%d", &n);
 
-    a[0] = -1;
+    l = -1;
     for (int i = 1; i <= n; i++) {
-        scanf("%d", &a[i]);
+        scanf("%d", &c);
 
-        if (a[i] >= a[i - 1]) {
+        if (c >= l) {
             mxc++;
         }
         else {
@@ -22,15 +20,14 @@ int main() {
             mxc = 1;
         }
 
-        if (a[i] <= a[i - 1]) {
+        if (c <= l) {
             mic++;
         }
         else {
             mi = max(mi, mic);
             mic = 1;
         }
-
-
+        l = c;
     }
     mx = max(mx, mxc);
     mi = max(mi, mic);
