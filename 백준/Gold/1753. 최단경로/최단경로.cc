@@ -1,62 +1,63 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <queue>
-#include <vector>
-#define INF 200000000
+#define INF 3000001
 using namespace std;
 
-struct Q {
-    int e, w;
+typedef struct ST {
+    int x, v;
 
-    Q(int a, int b) {
-        e = a;
-        w = b;
+    ST(int a, int b) {
+        x = a;
+        v = b;
     }
 
-    bool operator<(const Q& q)const {
-        return w > q.w;
+    bool operator<(const ST& ss)const {
+        return ss.v < v;
     }
-};
+}ST;
 
-int n, m, st;
-int d[20002];
+int v, e, s, A, B, C;
+priority_queue<ST> q;
+vector<ST> vec[20001];
+int d[20001];
 
-priority_queue<Q> q;
-vector<pair<int, int>> v[20002];
 
 int main() {
-    //freopen("input.txt", "rt", stdin);
-    
-    scanf("%d %d %d", &n, &m, &st);
 
-    for (int i = 1; i <= n; i++) d[i] = INF;
+    scanf("%d %d", &v, &e);
+    scanf("%d", &s);
 
-    for (int i = 0; i < m; i++) {
-        int ss, ee, vv;
-        scanf("%d %d %d", &ss, &ee, &vv);
-        v[ss].push_back({ ee, vv });
+    for (int i = 1; i <= v; i++) {
+        d[i] = INF;
     }
 
-    d[st] = 0;
-    q.push({ st, 0 });
+    for (int i = 0; i < e; i++) {
+        scanf("%d %d %d", &A, &B, &C);
+        vec[A].push_back({ B, C });
+    }
+
+    q.push({ s, 0 });
+    d[s] = 0;
 
     while (!q.empty()) {
-        int x = q.top().e;
-        int w = q.top().w;
+        int x = q.top().x;
+        int v = q.top().v;
         q.pop();
 
-        for (auto cx : v[x]) {
-            if (w + cx.second < d[cx.first]) {
-                d[cx.first] = w + cx.second;
-                q.push({ cx.first, w + cx.second });
+        if (d[x] < v) continue;
+
+        for (ST cq : vec[x]) {
+            if (d[cq.x] > d[x] + cq.v) {
+                q.push({ cq.x, d[x] + cq.v });
+                d[cq.x] = d[x] + cq.v;
             }
         }
     }
 
-    for (int i = 1; i <= n; i++) {
+    for (int i = 1; i <= v; i++) {
         if (d[i] == INF) printf("INF\n");
         else printf("%d\n", d[i]);
     }
-
     return 0;
 }
