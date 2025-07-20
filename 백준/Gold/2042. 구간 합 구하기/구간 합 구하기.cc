@@ -1,70 +1,60 @@
-#define _CRT_SECURE_NO_WARNINGS 
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
+int n, m, k;
+long long int seg[2097153], sum;
+long long int A, B, C, st, en;
 
-typedef long long ll;
-
-void update(ll* arr, ll* sqd, int sn, int i, ll z) {
-    ll tmp = arr[i];
-    arr[i] = z;
-    sqd[i / sn] += z - tmp;
-}
-
-ll query(ll* arr, ll* sqd, int sn, int n, int l, int r) {
-    ll ret = 0;
-    if (l / sn == r / sn) {
-        for (int i = l; i <= r; ++i) {
-            ret += arr[i];
-        }
-    }
-    else {
-        int j = l / sn * sn + sn < n ? l / sn * sn + sn : n;
-        for (int i = l; i < j; ++i) {
-            ret += arr[i];
-        }
-        for (int i = r / sn * sn; i <= r; ++i) {
-            ret += arr[i];
-        }
-        for (int i = l / sn + 1; i < r / sn; ++i) {
-            ret += sqd[i];
-        }
-    }
-    return ret;
-}
 
 int main() {
-    //freopen("input.txt", "rt", stdin);
-    int n, m, k, sn;
     scanf("%d %d %d", &n, &m, &k);
-    sn = (int)sqrt(n) + 1;
 
-    ll* arr = (ll*)malloc(n * sizeof(ll));
-    ll* sqd = (ll*)malloc(sn * sizeof(ll));
-
-    for (int i = 0; i < sn; ++i) {
-        sqd[i] = 0;
+    int start_index = 1;
+    while (start_index < n) {
+        start_index <<= 1;
     }
 
-    for (int i = 0; i < n; ++i) {
-        scanf("%lld", &arr[i]);
-        sqd[i / sn] += arr[i];
+
+
+    for (int i = start_index; i < start_index + n; i++) {
+        scanf("%lld", &seg[i]);
+    }
+    for (int i = start_index - 1; i >= 1; i--) {
+        seg[i] = seg[i * 2] + seg[i * 2 + 1];
     }
 
-    int T = m + k;
-    while (T--) {
-        ll a, b, c;
-        scanf("%lld %lld %lld", &a, &b, &c);
-        if (a == 1) {
-            update(arr, sqd, sn, b - 1, c);
+    /*for (int i = 1; i < start_index + n; i++) printf("%d ", seg[i]);
+    printf("\n");*/
+    
+    for (int i = 0; i < m + k; i++) {
+        scanf("%lld %lld %lld", &A, &B, &C);
+        if (A == 1) {
+            B += start_index - 1;
+            st = B;
+            while (st >= 1) {
+                st /= 2;
+                seg[st] -= seg[B];
+                seg[st] += C;
+            }
+            seg[B] = C;
+            /*for (int i = 1; i < start_index + n; i++) printf("%d ", seg[i]);
+            printf("\n");*/
         }
         else {
-            printf("%lld\n", query(arr, sqd, sn, n, b - 1, c - 1));
+            /*for (int i = 1; i < start_index + n; i++) printf("%lld ", seg[i]);
+            printf("\n");*/
+            st = B + start_index - 1;
+            en = C + start_index - 1;
+            sum = 0;
+            while (st <= en) {
+                sum += (st % 2 == 1 ? seg[st] : 0) + (en % 2 == 0 ? seg[en] : 0);
+                st = (st + 1) / 2;
+                en = (en - 1) / 2;
+            }
+            printf("%lld\n", sum);
         }
-    }
 
-    free(arr);
-    free(sqd);
+    }
 
     return 0;
 }
