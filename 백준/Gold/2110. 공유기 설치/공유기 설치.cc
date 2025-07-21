@@ -1,49 +1,47 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
+using namespace std;
 
-int com(const void* first, const void* second) {
-	return *(long long int*)first - *(long long int*)second;
+int com(const void* A, const void* B) {
+    return *(int*)A - *(int*)B;
 }
 
-long long int n, c, ans = 0;
-long long int a[200001];
+
+int n, c, mi, mx, d, ans = 0;
+int a[200001];
+
 
 int main() {
-	//freopen("input.txt", "rt", stdin);
-	
+    //freopen("input.txt", "rt", stdin);
+    
+    scanf("%d %d", &n, &c);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+    qsort(a, n, sizeof(a[0]), com);
 
-	scanf("%lld %lld", &n, &c);
+    int l = 1, r = a[n - 1] - a[0], mid;
 
-	for (int i = 0; i < n; i++) {
-		scanf("%lld", &a[i]);
-	}
+    while (l <= r) {
+        mid = (l + r) / 2;
 
-	qsort(a, n, sizeof(long long int), com);
+        int st = 0;
+        int count = 1;
+        for (int i = 1; i < n; i++) {
+            if (a[i] - a[st] >= mid) {
+                st = i;
+                count++;
+            }
+        }
 
+        if (count >= c) {
+            l = mid + 1;
+            ans = mid;
+        }
+        else r = mid - 1;
+    }
+    printf("%d\n", ans);
 
-	int l = 1, r = a[n - 1] - a[0], mid = 0;
-
-	while (l <= r) {
-		mid = (l + r) / 2;
-
-		int cnt = 1 ,s = 0;
-		for (int i = 1; i < n; i++) {
-			if (a[i] - a[s] >= mid) {
-				cnt++;
-				s = i;
-			}
-		}
-
-		if (cnt >= c) {
-			l = mid + 1;
-			ans = mid;
-		}
-		else r = mid - 1;
-
-	}
-
-	printf("%lld\n", ans);
-
-	return 0;
+    return 0;
 }
